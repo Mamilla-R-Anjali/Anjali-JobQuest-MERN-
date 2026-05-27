@@ -1,0 +1,31 @@
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const imageStorage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'profile-images',
+    allowed_formats: ['jpg', 'jpeg', 'png'],
+  },
+});
+
+const resumeStorage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'resumes',
+    allowed_formats: ['pdf'],
+    resource_type: 'raw',
+  },
+});
+
+const uploadProfile = multer({ storage: imageStorage });
+const uploadResume = multer({ storage: resumeStorage });
+
+module.exports = { cloudinary, uploadProfile, uploadResume };
