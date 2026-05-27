@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseURL = "http://localhost:8000/";
+export const baseURL = "https://anjali-jobquest-mern.onrender.com/";
 const axiosapi = axios.create({
   baseURL,
 });
