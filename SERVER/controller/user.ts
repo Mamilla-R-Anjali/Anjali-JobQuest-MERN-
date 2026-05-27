@@ -3,10 +3,11 @@ import { body } from "express-validator";
 
 const { Router } = require("express");
 const router = Router();
-const multer = require("multer");
-import { v4 as uuidv4 } from "uuid";
-import fs from "fs";
-import path from "path";
+// const multer = require("multer");
+// import { v4 as uuidv4 } from "uuid";
+// import fs from "fs";
+// import path from "path";
+const { uploadProfile, uploadResume } = require("../applications/cloudinary");
 const user = require("../model/user");
 const profile = require("../model/profile");
 const intern = require("../model/intern");
@@ -242,21 +243,21 @@ router.get(
 //     }
 // });
 
-const storage = multer.diskStorage({
-  destination: "uploads",
-  filename: (req: any, file: any, cb: any) => {
-    const uniqueSuffix = uuidv4();
-    const fileExtension = path.extname(file.originalname);
-    cb(null, file.fieldname + "-" + uniqueSuffix + fileExtension);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: "uploads",
+//   filename: (req: any, file: any, cb: any) => {
+//     const uniqueSuffix = uuidv4();
+//     const fileExtension = path.extname(file.originalname);
+//     cb(null, file.fieldname + "-" + uniqueSuffix + fileExtension);
+//   },
+// });
 
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
 //student build their profile
 router.post(
   "/profile/:Id",
-  upload.fields([
+  uploadProfile.fields([
     { name: "image", maxCount: 1 },
     { name: "resume", maxCount: 1 },
   ]),
@@ -316,8 +317,8 @@ router.post(
         address,
         about,
         user: userId,
-        image: req.files["image"][0].filename,
-        resume: req.files["resume"][0].filename,
+        image: req.files["image"][0].path,
+        resume: req.files["resume"][0].path,
       });
 
       if (newProfile) {
@@ -374,7 +375,7 @@ router.get(
 // Update user profile
 router.put(
   "/profile/:id",
-  upload.fields([
+  uploadProfile.fields([
     { name: "image", maxCount: 1 },
     { name: "resume", maxCount: 1 },
   ]),
@@ -410,12 +411,12 @@ router.put(
 
         // Check if an image file is uploaded
         const updatedImage = req.files["image"]
-          ? req.files["image"][0].filename
+          ? req.files["image"][0].path
           : existingProfile.image;
 
         // Check if a resume file is uploaded
         const updatedResume = req.files["resume"]
-          ? req.files["resume"][0].filename
+          ? req.files["resume"][0].path
           : existingProfile.resume;
 
         // Update the user profile
@@ -628,21 +629,21 @@ router.get(
 );
 
 //SECTION-c //STUDENT APPLY FOR THE INTERNSHIP
-const store = multer.diskStorage({
-  destination: "resume",
-  filename: (req: any, file: any, cb: any) => {
-    const uniqueSuffix = uuidv4();
-    const fileExtension = path.extname(file.originalname);
-    cb(null, file.fieldname + "-" + uniqueSuffix + fileExtension);
-  },
-});
+// const store = multer.diskStorage({
+//   destination: "resume",
+//   filename: (req: any, file: any, cb: any) => {
+//     const uniqueSuffix = uuidv4();
+//     const fileExtension = path.extname(file.originalname);
+//     cb(null, file.fieldname + "-" + uniqueSuffix + fileExtension);
+//   },
+// });
 
-const resume = multer({ storage: store });
+// const resume = multer({ storage: store });
 
 //apply for internship for the student
 router.post(
   "/apply/:userid/:internid",
-  resume.fields([{ name: "resume", maxCount: 1 }]),
+  uploadResume.fields([{ name: "resume", maxCount: 1 }]),
   async (req: any, res: any, next: NextFunction) => {
     const { userid, internid } = req.params;
     try {
@@ -686,7 +687,7 @@ router.post(
         qualification,
         percentage,
         Address,
-        resume: req.files["resume"][0].filename,
+        resume: req.files["resume"][0].path,
       });
 
       res.status(201).json({

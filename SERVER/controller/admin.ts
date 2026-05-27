@@ -3,10 +3,11 @@ import { param } from 'express-validator';
 import { body } from 'express-validator';
 import { Router } from "express";
 const router = Router();
-const multer = require('multer')
-import { v4 as uuidv4 } from 'uuid';
-import fs from 'fs';
-import path from 'path';
+// const multer = require('multer')
+// import { v4 as uuidv4 } from 'uuid';
+// import fs from 'fs';
+// import path from 'path';
+const { uploadProfile, uploadResume } = require("../applications/cloudinary");
 import { Request, Response, NextFunction } from "express";
 const company = require('../model/company')
 const apply = require('../model/apply')
@@ -389,16 +390,16 @@ router.get('/intern/:id', async (req: Request, res: Response, NextFunction: Next
 
 
 
-const store = multer.diskStorage({
-    destination: "applications",
-    filename: (req: any, file: any, cb: any) => {
-        const uniqueSuffix = uuidv4();
-        const fileExtension = path.extname(file.originalname);
-        cb(null, file.fieldname + '-' + uniqueSuffix + fileExtension);
-    }
-});
+// const store = multer.diskStorage({
+//     destination: "applications",
+//     filename: (req: any, file: any, cb: any) => {
+//         const uniqueSuffix = uuidv4();
+//         const fileExtension = path.extname(file.originalname);
+//         cb(null, file.fieldname + '-' + uniqueSuffix + fileExtension);
+//     }
+// });
 
-const resumes = multer({ storage: store });
+// const resumes = multer({ storage: store });
 
 
 
