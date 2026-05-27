@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 const initializeDatabase = (): Promise<void> => {
     return new Promise((resolve, reject) => {
-        mongoose.connect("mongodb://localhost:27017/intern")
+        mongoose.connect(process.env.MONGO_URI as string)
         .then(() => {
             console.log(`MongoDB is connected`);
             resolve(); // Resolve the promise if the connection is successful
