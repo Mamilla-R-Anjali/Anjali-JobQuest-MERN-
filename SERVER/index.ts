@@ -1,36 +1,34 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
-const user = require('./controller/user')
-const intern = require('./controller/company')
-const admin = require('./controller/admin')
+const user = require('./controller/user');
+const intern = require('./controller/company');
+const admin = require('./controller/admin');
+import initializeDatabase from './db/db';
+
 const app = express();
-const PORT = 8000;
-
-
+const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); 
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use('/uploads' ,express.static('uploads'))
-app.use('/resume' ,express.static('resume'))
+app.use('/uploads', express.static('uploads'));
+app.use('/resume', express.static('resume'));
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port http://192.168.1.80:8000`);
+app.get('/', (req: any, res: any) => {
+  res.send({ msg: "My api up and running successfully" });
 });
 
-mongoose.connect("mongodb://localhost:27017/jobportal", {
-}).then(()=>{
-    console.log(`mongodb is connected`)
-})
+app.use('/user', user);
+app.use('/company', intern);
+app.use('/admin', admin);
 
-
-app.get('/',(req: any, res: { send: (arg0: { msg: string; }) => void; })=>{
-  res.send({msg:"My api up and running succesfully"})
-})
-
-app.use('/user', user)
-app.use('/company', intern)
-app.use('/admin',admin)
-
-
+initializeDatabase().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}).catch((error) => {
+  console.error('Failed to connect to database:', error);
+});
