@@ -63,7 +63,7 @@ const Home = () => {
 
           <ul className="navbar-nav" style={{ marginLeft: "500px" }}>
             <li className="nav-item active">
-              <Link className="nav-link">
+              <Link className="nav-link" onClick={() => setActiveComponent(null)}>
                 <i className="fa fa-home" />
                 Home
                 <span className="sr-only">(current)</span>
@@ -80,7 +80,6 @@ const Home = () => {
             </li>
             <li className="nav-item">
               {" "}
-              {/* data-bs-toggle="modal" data-bs-target="#staticBackdrop"*/}
               <Link
                 className="nav-link"
                 onClick={() => handleButtonClick("company")}
@@ -91,7 +90,6 @@ const Home = () => {
             </li>
             <li className="nav-item">
               {" "}
-              {/* data-bs-toggle="modal" data-bs-target="#staticBackdrop"*/}
               <Link
                 className="nav-link"
                 onClick={() => handleButtonClick("admin")}
@@ -103,6 +101,72 @@ const Home = () => {
           </ul>
         </div>
       </nav>
+
+      {/* ── HERO — only shows when no button is clicked ── */}
+      {!activeComponent && (
+        <div
+          style={{
+            minHeight: "100vh",
+            background: "linear-gradient(135deg, #ff6b35 0%, #ff3cac 100%)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "40px 24px",
+            textAlign: "center",
+            paddingTop: "80px",
+          }}
+        >
+          <div>
+            <div
+              style={{
+                display: "inline-block",
+                background: "rgba(255,255,255,0.25)",
+                backdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.4)",
+                color: "#fff",
+                fontSize: 13,
+                fontWeight: 800,
+                letterSpacing: 1.5,
+                padding: "8px 22px",
+                borderRadius: 50,
+                marginBottom: 28,
+                textTransform: "uppercase",
+              }}
+            >
+              🚀 India's #1 Job Portal for Students
+            </div>
+
+            <h1
+              style={{
+                fontSize: "clamp(2.2rem, 5vw, 3.6rem)",
+                fontWeight: 900,
+                color: "#fff",
+                lineHeight: 1.15,
+                margin: "0 0 20px",
+                textShadow: "0 2px 20px rgba(0,0,0,0.15)",
+              }}
+            >
+              Find Your Dream Job
+              <br />
+              Navigate Your Career
+            </h1>
+
+            <p
+              style={{
+                fontSize: 18,
+                color: "rgba(255,255,255,0.9)",
+                maxWidth: 520,
+                margin: "0 auto",
+                lineHeight: 1.7,
+                fontWeight: 600,
+              }}
+            >
+              Connect students with top employers. Discover thousands of
+              opportunities tailored for freshers and experienced professionals.
+            </p>
+          </div>
+        </div>
+      )}
 
       {activeComponent === "admin" && <AdminSignIn />}
       {activeComponent === "user" && <SignIn />}
