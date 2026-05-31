@@ -29,7 +29,7 @@ const Home = () => {
     <div>
       <nav className="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark fixed-top ">
         <Link className="navbar-brand mx-3 ">
-          JOBQUEST: NAVIGATING YOUR CARRER JOURNEY FULL STACK MERN
+          JobQuest — Navigate Your Career
         </Link>
         <button
           className="navbar-toggler"
@@ -80,6 +80,7 @@ const Home = () => {
             </li>
             <li className="nav-item">
               {" "}
+              {/* data-bs-toggle="modal" data-bs-target="#staticBackdrop"*/}
               <Link
                 className="nav-link"
                 onClick={() => handleButtonClick("company")}
@@ -90,6 +91,7 @@ const Home = () => {
             </li>
             <li className="nav-item">
               {" "}
+              {/* data-bs-toggle="modal" data-bs-target="#staticBackdrop"*/}
               <Link
                 className="nav-link"
                 onClick={() => handleButtonClick("admin")}
@@ -107,7 +109,7 @@ const Home = () => {
         <div
           style={{
             minHeight: "100vh",
-            background: "linear-gradient(135deg, #ff6b35 0%, #ff3cac 100%)",
+            background: "linear-gradient(135deg, #ffb347 0%, #ffb6c1 100%)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -120,10 +122,10 @@ const Home = () => {
             <div
               style={{
                 display: "inline-block",
-                background: "rgba(255,255,255,0.25)",
+                background: "rgba(255,255,255,0.35)",
                 backdropFilter: "blur(8px)",
-                border: "1px solid rgba(255,255,255,0.4)",
-                color: "#fff",
+                border: "1px solid rgba(255,255,255,0.5)",
+                color: "#7a3b00",
                 fontSize: 13,
                 fontWeight: 800,
                 letterSpacing: 1.5,
@@ -143,7 +145,7 @@ const Home = () => {
                 color: "#fff",
                 lineHeight: 1.15,
                 margin: "0 0 20px",
-                textShadow: "0 2px 20px rgba(0,0,0,0.15)",
+                textShadow: "0 2px 20px rgba(0,0,0,0.1)",
               }}
             >
               Find Your Dream Job
@@ -154,7 +156,7 @@ const Home = () => {
             <p
               style={{
                 fontSize: 18,
-                color: "rgba(255,255,255,0.9)",
+                color: "rgba(255,255,255,0.95)",
                 maxWidth: 520,
                 margin: "0 auto",
                 lineHeight: 1.7,
