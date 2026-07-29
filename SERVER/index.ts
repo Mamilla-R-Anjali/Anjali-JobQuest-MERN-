@@ -1,4 +1,6 @@
-import dotenv from 'dotenv';
+import dns from "dns";
+import dotenv from "dotenv";
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 dotenv.config();
 
 const express = require('express');
@@ -13,7 +15,13 @@ const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use('/uploads', express.static('uploads'));
 app.use('/resume', express.static('resume'));
 
