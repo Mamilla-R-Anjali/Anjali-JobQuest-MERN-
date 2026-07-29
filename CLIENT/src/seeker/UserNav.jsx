@@ -7,6 +7,7 @@ import ViewPostedJobs from "../company/ViewPostedJobs";
 import axiosapi from "../axiosapi";
 import ViewAppliedJobs from "./ViewAppliedJobs";
 import { useForm } from "react-hook-form";
+import { Collapse } from "bootstrap";
 
 const UserNav = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,6 +21,15 @@ const UserNav = () => {
   const searchForm = useForm();
   const handlePageRender = (elem) => {
     setShowResume(elem);
+    const navbarMenu = document.getElementById(
+      "navbarSupportedContent"
+    );
+    if (navbarMenu) {
+      const collapseMenu =
+        Collapse.getOrCreateInstance(navbarMenu);
+
+      collapseMenu.hide();
+    }
     navigatingTo("/userhome");
   };
 

@@ -7,9 +7,11 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   const [activeComponent, setActiveComponent] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleButtonClick = (component) => {
     setActiveComponent(component);
+    setMenuOpen(false);
   };
 
   // useEffect(() => {
@@ -34,15 +36,17 @@ const Home = () => {
         <button
           className="navbar-toggler custom-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
+          onClick={() => setMenuOpen(!menuOpen)}
           aria-controls="navbarSupportedContent"
-          aria-expanded="false"
+          aria-expanded={menuOpen}
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <div
+          className={`collapse navbar-collapse ${menuOpen ? "show" : ""}`}
+          id="navbarSupportedContent"
+        >
           <ul className="navbar-nav ">
             <li className="nav-item active">
               {/* <Link className="nav-link">
@@ -63,7 +67,13 @@ const Home = () => {
 
           <ul className="navbar-nav ms-auto">
             <li className="nav-item active">
-              <Link className="nav-link" onClick={() => setActiveComponent(null)}>
+              <Link
+                className="nav-link"
+                onClick={() => {
+                  setActiveComponent(null);
+                  setMenuOpen(false);
+                }}
+              >
                 <i className="fa fa-home" />
                 Home
                 <span className="sr-only">(current)</span>

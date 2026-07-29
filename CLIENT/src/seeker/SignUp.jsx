@@ -8,14 +8,16 @@ const SignUp = () => {
   const signUpForm = useForm();
   const navigateTo=useNavigate()
   const signUpfunc = async (data) => {
+  console.log("Signup data:", data);
     try {
       const res = await axiosapi.post("/user/register", data);
-      console.log(res.data.message);
       toast.success(res.data.message);
-      navigateTo("/")
+      navigateTo("/");
     } catch (error) {
-      toast.error(error.response.data.message);
-      console.log(error.response.data.message);
+      console.error("Signup error:", error);
+      toast.error(
+        error.response?.data?.message || "Signup failed"
+      );
     }
   };
 
@@ -40,10 +42,14 @@ const SignUp = () => {
                       <input
                         className="mb-4"
                         type="text"
-                        name="email"
-                        placeholder="Enter a Full Nme"
-                        {...signUpForm.register("fullname")}
+                        placeholder="Enter a Full Name"
+                        {...signUpForm.register("fullname", {
+                          required: "Full name is required",
+                        })}
                       />
+                      <p className="text-danger">
+                        {signUpForm.formState.errors.fullname?.message}
+                      </p>
                     </div>
                     <div className="row px-3">
                       <label className="mb-1">
@@ -51,7 +57,7 @@ const SignUp = () => {
                       </label>
                       <input
                         className="mb-4"
-                        type="text"
+                        type="email"
                         name="email"
                         placeholder="Enter a valid email address"
                         {...signUpForm.register("email", {
